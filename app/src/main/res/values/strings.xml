@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">PokeTracker</string>
+
+    <string name="MapsAPIKey">AIzaSyAs_HpgnmQt9gjk3rf15knDH6ffm6gAuf0</string>
+</resources>
