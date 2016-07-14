@@ -130,7 +130,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void zoomToUser(GoogleMap map) {
-        WithLocation.requestLocationPermission(this);
+        PermissionsManager.requestLocationPermission(this);
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
 

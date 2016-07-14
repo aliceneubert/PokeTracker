@@ -29,6 +29,7 @@ public class SharingFeature {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("*/*");
         activity.startActivityForResult(intent, 10);
+        return null;
     }
 
     public void importPokemon(File file) {
