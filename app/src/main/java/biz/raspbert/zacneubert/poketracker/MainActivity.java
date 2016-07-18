@@ -14,6 +14,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.ListViewAutoScrollHelper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -75,9 +76,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 public void onClick(View view) {
                     view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                     for(ImageView spriteView : spriteViews) {
-                        spriteView.setBackgroundColor(MainActivity.this.getColor(R.color.white));
+                        spriteView.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.white));
                     }
-                    view.setBackgroundColor(MainActivity.this.getColor(R.color.grey));
+                    view.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.grey));
                     selectedPokemon = Pokemon.getPokemon(pokenum);
                 }
             });
