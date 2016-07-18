@@ -1,4 +1,4 @@
-package com.example.zneubert.poketracker;
+package biz.raspbert.zacneubert.poketracker;
 
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;

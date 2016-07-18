@@ -1,4 +1,4 @@
-package com.example.zneubert.poketracker;
+package biz.raspbert.zacneubert.poketracker;
 
 import android.Manifest;
 import android.annotation.TargetApi;
@@ -119,6 +119,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             public boolean onMarkerClick(Marker marker) {
                 pokemonPicker.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 LatLng latlng = marker.getPosition();
+                List<LocationRecord> asdf = LocationRecord.listAll(LocationRecord.class);
+                int count = (int) LocationRecord.count(LocationRecord.class);
                 LocationRecord locationRecord = LocationRecord.getByLatLng(latlng);
 
                 MarkerDialog.createDialog(MainActivity.this, locationRecord, marker).show();

@@ -1,4 +1,4 @@
-package com.example.zneubert.poketracker;
+package biz.raspbert.zacneubert.poketracker;
 
 import android.app.Activity;
 import android.app.AlertDialog;

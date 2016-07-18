@@ -1,4 +1,4 @@
-package com.example.zneubert.poketracker;
+package biz.raspbert.zacneubert.poketracker;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
@@ -22,9 +22,7 @@ public class LocationRecord extends SugarRecord {
     public double longitude;
     public double latitude;
 
-    public LocationRecord() {
-
-    }
+    public LocationRecord() {}
 
     public void place(GoogleMap map) {
         LatLng latlng = new LatLng(latitude, longitude);
@@ -56,7 +54,7 @@ public class LocationRecord extends SugarRecord {
         return "#" + pokemonnumber + "\nName: " + pokemon.getName() + "\nType: " + pokemon.getType() + "\nDate Recorded: " + placedDate.toString();
     }
 
-    @Override
+    /*@Override
     public int hashCode() {
         return (int) (placedDate.getTime()*17 + pokemonnumber*43 + longitude * 13 + latitude * 17);
     }
@@ -71,7 +69,7 @@ public class LocationRecord extends SugarRecord {
                 && otherRecord.longitude == this.longitude
                 && otherRecord.latitude == this.latitude
                 && otherRecord.pokemonnumber == this.pokemonnumber;
-    }
+    }*/
 
     public static Set<LocationRecord> setAll() {
         List<LocationRecord> recordsList = LocationRecord.listAll(LocationRecord.class);
