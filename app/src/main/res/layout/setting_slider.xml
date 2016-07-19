@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="fill_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/setting_title"
+        android:text="Setting Title"
+        android:textSize="60px"
+        android:textColor="@color/black"/>
+    <SeekBar
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/setting_integer_seekbar"
+        />
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="5px"
+        android:layout_margin="30px"
+        android:background="@color/black"></View>
+</LinearLayout>

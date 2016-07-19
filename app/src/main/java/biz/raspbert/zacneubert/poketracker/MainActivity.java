@@ -3,6 +3,8 @@ package biz.raspbert.zacneubert.poketracker;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.DataSetObserver;
@@ -43,11 +45,17 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+
+import biz.raspbert.zacneubert.poketracker.Settings.Settings_List_Activity;
 
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
     private Pokemon selectedPokemon;
     private List<ImageView> spriteViews = new ArrayList<>();
     private LinearLayout pokemonPicker;
+    private ImageView menu_button;
+
+    public static GoogleMap googleMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +69,15 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         pokemonPicker = (LinearLayout) findViewById(R.id.pokemonpicker);
         Resources resources = this.getResources();
 
+        menu_button = (ImageView) findViewById(R.id.menu_button);
+        menu_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                Intent startSettings = new Intent(getApplicationContext(), Settings_List_Activity.class);
+                startActivity(startSettings);
+            }
+        });
 
         for(int pokemonnumber=1; pokemonnumber<152; pokemonnumber++) {
             int id = SpriteManager.allSprites.get(pokemonnumber);
@@ -88,7 +105,16 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+
+    }
+
+    @Override
     public void onMapReady(final GoogleMap map) {
+        this.googleMap = map;
+
         while (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 6);
         }
@@ -124,6 +150,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 int count = (int) LocationRecord.count(LocationRecord.class);
                 LocationRecord locationRecord = LocationRecord.getByLatLng(latlng);
 
+                if(locationRecord == null) {
+                    //throw new Exception("No locationrecord for " + latlng.toString());
+                }
                 MarkerDialog.createDialog(MainActivity.this, locationRecord, marker).show();
 
                 return true;
@@ -133,6 +162,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void zoomToUser(GoogleMap map) {
+        this.googleMap = map;
+
         PermissionsManager.requestLocationPermission(this);
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();

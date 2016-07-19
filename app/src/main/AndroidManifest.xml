@@ -12,7 +12,7 @@
         android:icon="@drawable/poke512x512"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:name="com.orm.SugarApp"
+        android:name=".PokeTrackerApplication"
         android:theme="@style/AppTheme">
 
         <meta-data android:name="DATABASE" android:value="poketracker3.db" />
@@ -26,6 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Settings.Settings_List_Activity" />
     </application>
 
 </manifest>

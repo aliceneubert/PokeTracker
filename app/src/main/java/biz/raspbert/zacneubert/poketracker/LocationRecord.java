@@ -4,6 +4,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PointOfInterest;
+import com.google.gson.annotations.Expose;
 import com.orm.SugarRecord;
 
 import java.util.Date;
@@ -16,10 +17,15 @@ import java.util.Set;
  */
 public class LocationRecord extends SugarRecord {
 
-    public Long id;
+    public transient Long id;
+
+    @Expose
     public int pokemonnumber;
+    @Expose
     public Date placedDate;
+    @Expose
     public double longitude;
+    @Expose
     public double latitude;
 
     public LocationRecord() {}
@@ -57,6 +63,11 @@ public class LocationRecord extends SugarRecord {
     /*@Override
     public int hashCode() {
         return (int) (placedDate.getTime()*17 + pokemonnumber*43 + longitude * 13 + latitude * 17);
+    }*/
+
+    @Override
+    public int hashCode() {
+        return pokemonnumber*31 + ((int) longitude)*31 + ((int) latitude)*31;
     }
 
     @Override
@@ -65,11 +76,14 @@ public class LocationRecord extends SugarRecord {
         if(other == this) return true;
 
         LocationRecord otherRecord = (LocationRecord) other;
-        return otherRecord.placedDate.equals(this.placedDate)
-                && otherRecord.longitude == this.longitude
-                && otherRecord.latitude == this.latitude
+        boolean latitudeMatches = Math.abs(otherRecord.latitude - this.latitude) < .01;
+        boolean longitudeMatches = Math.abs(otherRecord.longitude - this.longitude) < .01;
+        boolean isEqual = otherRecord.placedDate.equals(this.placedDate)
+                && latitudeMatches
+                && longitudeMatches
                 && otherRecord.pokemonnumber == this.pokemonnumber;
-    }*/
+        return isEqual;
+    }
 
     public static Set<LocationRecord> setAll() {
         List<LocationRecord> recordsList = LocationRecord.listAll(LocationRecord.class);
