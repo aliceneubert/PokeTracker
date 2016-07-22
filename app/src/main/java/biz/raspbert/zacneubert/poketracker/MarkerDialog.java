@@ -34,7 +34,7 @@ public class MarkerDialog {
             }
         });
 
-        builder.setIcon(pokemon.getResourceSprite());
+        builder.setIcon(pokemon.getResourceSprite(activity));
         // Create the AlertDialog object and return it
         return builder.create();
     }

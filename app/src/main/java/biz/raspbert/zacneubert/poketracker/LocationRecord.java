@@ -1,5 +1,7 @@
 package biz.raspbert.zacneubert.poketracker;
 
+import android.content.Context;
+
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -30,10 +32,10 @@ public class LocationRecord extends SugarRecord {
 
     public LocationRecord() {}
 
-    public void place(GoogleMap map) {
+    public void place(Context context, GoogleMap map) {
         LatLng latlng = new LatLng(latitude, longitude);
         map.addMarker(
-                new MarkerOptions().position(latlng).icon(Pokemon.getPokemon(pokemonnumber).getBitmapDescriptor())
+                new MarkerOptions().position(latlng).icon(Pokemon.getPokemon(pokemonnumber).getBitmapDescriptor(context))
         );
         Pokemon.getPokemon(pokemonnumber);
     }

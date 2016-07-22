@@ -35,7 +35,8 @@ public class Settings_List_Activity extends AppCompatActivity {
         buttonSetting_importPokemon.SetActivity(this);
         Settings.add(buttonSetting_importPokemon);
 
-        //Settings.add(new Setting_Root_Folder());
+        Settings.add(new CheckboxSetting_MuteSound());
+        Settings.add(new CheckboxSetting_AlternateSprites());
 
         Settings_List = (ListView) this.findViewById(R.id.settingsList);
         Settings_List.setAdapter(new Settings_List_Adapter(this, R.layout.setting_list_row_dummy, Settings));

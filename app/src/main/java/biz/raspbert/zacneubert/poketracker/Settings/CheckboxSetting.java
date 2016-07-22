@@ -28,4 +28,6 @@ public abstract class CheckboxSetting extends Setting {
 
     public abstract String getTitleText();
     public abstract String getSubtitleText();
+
+    public abstract void onChange(Context context, boolean ticked);
 }

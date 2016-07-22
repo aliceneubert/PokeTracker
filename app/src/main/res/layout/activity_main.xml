@@ -30,4 +30,9 @@
             android:id="@+id/pokemonpicker">
         </LinearLayout>
     </HorizontalScrollView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="6pt"
+        android:text="This app is in no way affiliated with Pokemon, Nintendo or Niantic"/>
 </RelativeLayout>

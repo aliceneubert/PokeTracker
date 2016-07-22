@@ -74,13 +74,14 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View view) {
                 view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                Music.playSelectSound(MainActivity.this);
                 Intent startSettings = new Intent(getApplicationContext(), Settings_List_Activity.class);
                 startActivity(startSettings);
             }
         });
 
         for(int pokemonnumber=1; pokemonnumber<152; pokemonnumber++) {
-            int id = SpriteManager.allSprites.get(pokemonnumber);
+            int id = SpriteManager.allSprites(this).get(pokemonnumber);
             ImageView imageView = new ImageView(this);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 imageView.setImageDrawable(this.getDrawable(id));
@@ -92,6 +93,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 @Override
                 public void onClick(View view) {
                     view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                    Music.playSelectSound(MainActivity.this);
                     for(ImageView spriteView : spriteViews) {
                         spriteView.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.white));
                     }
@@ -107,22 +109,33 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onResume() {
         super.onResume();
+    }
 
+    public static void clearMarkers() {
+        if(MainActivity.googleMap == null) return;
+        googleMap.clear();
+    }
 
+    public static void addAllMarkers(Context context) {
+        if(MainActivity.googleMap == null) return;
+        for(LocationRecord locationRecord : LocationRecord.listAll(LocationRecord.class)) {
+            locationRecord.place(context, googleMap);
+        }
     }
 
     @Override
     public void onMapReady(final GoogleMap map) {
         this.googleMap = map;
 
-        while (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 6);
         }
-        map.setMyLocationEnabled(true);
-        final LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            map.setMyLocationEnabled(true);
+        }
 
         for(LocationRecord locationRecord : LocationRecord.listAll(LocationRecord.class)) {
-            locationRecord.place(map);
+            locationRecord.place(this, map);
         }
 
         selectedPokemon = Pokemon.getPokemon(1); //Bulbasaur!
@@ -130,6 +143,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onMapClick(LatLng latLng) {
                 pokemonPicker.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                Music.playSelectSound(MainActivity.this);
                 LocationRecord locationRecord = new LocationRecord();
                 locationRecord.latitude = latLng.latitude;
                 locationRecord.longitude = latLng.longitude;
@@ -137,7 +151,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 locationRecord.pokemonnumber = selectedPokemon.number;
                 locationRecord.save();
 
-                locationRecord.place(map);
+                locationRecord.place(MainActivity.this, map);
             }
         });
 
@@ -145,6 +159,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public boolean onMarkerClick(Marker marker) {
                 pokemonPicker.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                Music.playSelectSound(MainActivity.this);
                 LatLng latlng = marker.getPosition();
                 List<LocationRecord> asdf = LocationRecord.listAll(LocationRecord.class);
                 int count = (int) LocationRecord.count(LocationRecord.class);

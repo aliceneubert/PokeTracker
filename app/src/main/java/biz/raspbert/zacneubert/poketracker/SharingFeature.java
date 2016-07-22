@@ -35,7 +35,7 @@ public class SharingFeature {
         return null;
     }
 
-    public static void importPokemon(File file, GoogleMap map) {
+    public static void importPokemon(Context context, File file, GoogleMap map) {
         Scanner scanner = null;
         try {
             scanner = new Scanner(file);
@@ -48,7 +48,7 @@ public class SharingFeature {
                 if (!existingRecords.contains(locationRecord)) {
                     locationRecord.save();
                     if(map != null) {
-                        locationRecord.place(map);
+                        locationRecord.place(context, map);
                     }
                 }
                 else {
@@ -62,13 +62,13 @@ public class SharingFeature {
         }
     }
 
-    public static void importWithChosenFile(Activity activity, final GoogleMap map) {
+    public static void importWithChosenFile(final Activity activity, final GoogleMap map) {
         FileChooser chooser = new FileChooser(activity);
         chooser.setFileListener(
             new FileChooser.FileSelectedListener() {
                 @Override
                 public void fileSelected(final File file) {
-                    importPokemon(file, map);
+                    importPokemon(activity, file, map);
                 }
             }
         );

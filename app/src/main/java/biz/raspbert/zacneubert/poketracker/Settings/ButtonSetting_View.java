@@ -10,6 +10,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import biz.raspbert.zacneubert.poketracker.Music;
 import biz.raspbert.zacneubert.poketracker.R;
 
 /**
@@ -39,6 +40,8 @@ public class ButtonSetting_View implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
+        view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+        Music.playSelectSound(view.getContext());
         buttonSetting.doOnClick(view);
     }
 }

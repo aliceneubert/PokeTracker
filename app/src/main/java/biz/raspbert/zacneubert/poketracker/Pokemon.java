@@ -1,5 +1,7 @@
 package biz.raspbert.zacneubert.poketracker;
 
+import android.content.Context;
+
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.orm.SugarRecord;
@@ -16,12 +18,12 @@ public class Pokemon extends SugarRecord {
     private String name;
     private String type;
 
-    public BitmapDescriptor getBitmapDescriptor() {
-        return BitmapDescriptorFactory.fromResource(getResourceSprite());
+    public BitmapDescriptor getBitmapDescriptor(Context context) {
+        return BitmapDescriptorFactory.fromResource(getResourceSprite(context));
     }
 
-    public int getResourceSprite() {
-        return SpriteManager.allSprites.get(number);
+    public int getResourceSprite(Context context) {
+        return SpriteManager.allSprites(context).get(number);
     }
 
     public Pokemon() {
